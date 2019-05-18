@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeDataInsertFromExcel", "LargeDataInsertFromExcel\LargeDataInsertFromExcel.csproj", "{637C471A-EDE3-425A-A134-F735DD9329B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{637C471A-EDE3-425A-A134-F735DD9329B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637C471A-EDE3-425A-A134-F735DD9329B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637C471A-EDE3-425A-A134-F735DD9329B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637C471A-EDE3-425A-A134-F735DD9329B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB6E7305-FBF1-4324-AD86-50E56643ED83}
+	EndGlobalSection
+EndGlobal
