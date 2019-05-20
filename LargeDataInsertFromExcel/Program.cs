@@ -16,19 +16,39 @@ namespace LargeDataInsertFromExcel
         //ok
         static void Main(string[] args)
         {
-            var dt = ReaderSheet.Run(@"C:\Users\tiago\OneDrive\problema.xlsx");
+            var cabecalho = new Dictionary<string, object>()
+            {
+                {"NOME", typeof(String) },
+                {"VALOR", typeof(decimal) },
+                {"QUANTIDADE", typeof(Int32) },
+                {"DATA", typeof(DateTime) },
+                {"OBS", typeof(string) },
+            };
+
+            var dt = ReaderSheet.Run(@"C:\Projetos\Comparacao de arquivos exemplos\SAS.xlsx", cabecalho);
+
+            //foreach (DataRow row in dt.First().Rows)
+            //{
+            //    // ... Write value of first field as integer.
+            //    Console.WriteLine(row.Field<DateTime?>(1));
+            //}
+
             var Inumerable = dt.First().AsEnumerable().ToChunks(100000)
                  .Select(rows => rows.CopyToDataTable());
 
             foreach (var item in Inumerable)
             {
+               // var data = item.Rows[1]["DATA"].ToString();
+
                 Bulk(item);
             }
+
+            Console.WriteLine("Done!");
         }
 
         public static void Bulk(DataTable dataTable) {
 
-            string connectionString = "Server=mydb.coyr4gzqqdng.us-east-1.rds.amazonaws.com;Database=LongShortDB; User ID=;Password=";
+            string connectionString = "Server=mydb.coyr4gzqqdng.us-east-1.rds.amazonaws.com;Database=TESTE; User ID=tiagogomes07;Password=tiago1986";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -45,7 +65,7 @@ namespace LargeDataInsertFromExcel
                     );
 
                 // set the destination table name
-                bulkCopy.DestinationTableName = "dbo.TESTE";
+                bulkCopy.DestinationTableName = "dbo.SAS";
                 connection.Open();
 
                 // write the data in the "dataTable"
@@ -60,7 +80,7 @@ namespace LargeDataInsertFromExcel
 
     public static class ReaderSheet
     {
-        public static List<DataTable> Run(string path)
+        public static List<DataTable> Run(string path, Dictionary<string, dynamic> cabecalho)
         {
             using (var excel = new ExcelPackage())
             {
@@ -82,10 +102,15 @@ namespace LargeDataInsertFromExcel
                             var itensRow = new List<Object>();
                             for (int col = 1; col <= dimensions.Columns; col++)
                             {
-                                var cell = worksheet.Cells[row, col].Value.ToString();
+                                var cell = worksheet.Cells[row, col].Value?.ToString();
                                 if (row == 1)
                                 {//creating colluns data table, just for first row
-                                    dataTable.Columns.Add(cell, typeof(String));
+
+                                    var tipo = cabecalho.Where( x=> x.Key == cell ).First();
+
+                                    //   itensRow.Add(new );
+
+                                      dataTable.Columns.Add(cell, tipo.Value);
                                 }
                                 else
                                 {
@@ -93,7 +118,9 @@ namespace LargeDataInsertFromExcel
                                 }
                                 // Console.WriteLine(cell);
                             }
-                            dataTable.Rows.Add(itensRow.ToArray());
+
+                            if (itensRow.Count>0)
+                             dataTable.Rows.Add(itensRow.ToArray());
                         }
                         listDataTable.Add(dataTable);
                     }
