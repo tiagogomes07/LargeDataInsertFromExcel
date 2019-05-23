@@ -48,7 +48,7 @@ namespace LargeDataInsertFromExcel
 
         public static void Bulk(DataTable dataTable) {
 
-            string connectionString = "Server=mydb.coyr4gzqqdng.us-east-1.rds.amazonaws.com;Database=TESTE; User ID=tiagogomes07;Password=tiago1986";
+            string connectionString = "Server=;Database=TESTE; User ID=;Password=";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
